@@ -7,13 +7,15 @@
 typedef struct
 {
     char name[100];
+    char pw[100];
     int loan_money[100];
+    // int payment[100];
 } User;
 
 void signin(User *ptr, int *num);
 void check(User *ptr, int *num);
 void loan(User *ptr, int *num);
-void grade();
+// void grade();
 void repayment(User *ptr, int *num);
 
 int main(void)
@@ -48,10 +50,10 @@ int main(void)
         {
             loan(user, &person);
         }
-        if (choice == 4)
-        {
-            grade();
-        }
+        // if (choice == 4)
+        // {
+        //     grade();
+        // }
         if (choice == 5)
         {
             repayment(user, &person);
@@ -71,6 +73,8 @@ void signin(User *ptr, int *num)
         printf("\n[INSERT] \n");
         printf("INPUT NAME : ");
         scanf("%s", ptr[*num].name);
+        printf("INPUT PASSWORD : ");
+        scanf("%s", ptr[*num].pw);
         (*num)++;
         printf("\nSUCCESS !! \n");
     }
@@ -84,13 +88,16 @@ void signin(User *ptr, int *num)
 void check(User *ptr, int *num)
 {
     char name[100];
+    char pw[100];
     if (*num > 0)
     {
         printf("INPUT NAME : ");
         scanf("%s", name);
+        printf("INPUT PW : ");
+        scanf("%s", pw);
         for (int i = 0; i < max_num; i++)
         {
-            if (strcmp(name, ptr[i].name) == 0)
+            if (strcmp(name, ptr[i].name) == 0 && strcmp(pw, ptr[i].pw) == 0)
             {
                 printf("\n Data Found !!\n\n");
                 printf("이름 : %s\n", ptr[i].name);
@@ -106,22 +113,23 @@ void check(User *ptr, int *num)
 
 void loan(User *ptr, int *num)
 {
-    char name;
-    int money;
+    char name[100];
+    char pw[100];
+    int money = 0;
     if (*num > 0)
     {
-        char name;
-        int money = 0;
         printf("INPUT NAME : ");
-        scanf("%s", &name);
-        for (int j = 0; j < max_num; j++)
+        scanf("%s", name);
+        printf("INPUT PW : ");
+        scanf("%s", pw);
+        for (int i = 0; i < max_num; i++)
         {
-            if (strcmp(&name, ptr[j].name) == 0)
+            if (strcmp(name, ptr[i].name) == 0 && strcmp(pw, ptr[i].pw) == 0)
             {
                 printf("대출 신청 금액을 입력하세요 : ");
                 scanf("%d", &money);
-                *ptr[j].loan_money += money;
-                printf("대출 신청 후 %s님의 대출 총액은 %d원입니다. \n", ptr[j].name, *ptr[j].loan_money);
+                *ptr[i].loan_money += money;
+                printf("대출 신청 후 %s님의 대출 총액은 %d원입니다. \n", ptr[i].name, *ptr[i].loan_money);
             }
         }
     }
@@ -131,29 +139,30 @@ void loan(User *ptr, int *num)
     }
 }
 
-void grade()
-{
-    char *arr[] = {"200,000,000", "150,000,000", "100,000,000", "70,000,000", "40,000,000"};
-    printf("[신용등급 표]\n");
-    for (int i = 0; i < 5; i++)
-    {
-        printf("%d등급\t%s원\n", i + 1, arr[i]);
-    }
-}
+// void grade()
+// {
+//     char *arr[] = {"200,000,000", "150,000,000", "100,000,000", "70,000,000", "40,000,000"};
+//     printf("[신용등급 표]\n");
+//     for (int i = 0; i < 5; i++)
+//     {
+//         printf("%d등급\t%s원\n", i + 1, arr[i]);
+//     }
+// }
 
 void repayment(User *ptr, int *num)
 {
     int money;
-    char name;
+    char name[100];
+    char pw[100];
     if (*num > 0)
     {
-        int money;
-        char name;
         printf("INPUT NAME : ");
-        scanf("%s", &name);
+        scanf("%s", name);
+        printf("INPUT PW : ");
+        scanf("%s", pw);
         for (int i = 0; i < max_num; i++)
         {
-            if (strcmp(ptr[i].name, &name) == 0)
+            if (strcmp(name, ptr[i].name) == 0 && strcmp(pw, ptr[i].pw) == 0)
             {
                 printf("%s님의 대출 총액은 %d원입니다. \n", ptr[i].name, *ptr[i].loan_money);
                 printf("갚으실 금액을 입력하세요 : ");
